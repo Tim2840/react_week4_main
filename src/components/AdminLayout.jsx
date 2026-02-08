@@ -10,16 +10,18 @@ const API_PATH = import.meta.env.VITE_API_PATH;
 
 function AdminLayout({ setIsAuth }) {
   const [products, setProducts] = useState([]);
+  const [pageInfo, setPageInfo] = useState({}); // 新增：分頁資訊狀態
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const fetchProducts = async () => {
+  const fetchProducts = async (page = 1) => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `${API_BASE}/api/${API_PATH}/admin/products`
+        `${API_BASE}/api/${API_PATH}/admin/products?page=${page}`
       );
       setProducts(response.data.products);
+      setPageInfo(response.data.pagination); // 儲存分頁資訊
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -34,6 +36,12 @@ function AdminLayout({ setIsAuth }) {
   useEffect(() => {
     fetchProducts();
   }, []);
+
+  // TODO: 這裡給你練習！請實作換頁邏輯
+  const handlePageChange = (page) => {
+    console.log("現在要切換到第幾頁：", page);
+    // 提示：呼叫 fetchProducts 並帶入 page 參數
+  };
 
   const openAddProductModal = () => {
     setSelectedProduct({
@@ -69,7 +77,7 @@ function AdminLayout({ setIsAuth }) {
         await axios.delete(
           `${API_BASE}/api/${API_PATH}/admin/product/${targetId}`
         );
-        fetchProducts();
+        fetchProducts(); // 刪除後重新取得當前頁面資料
       }
     } catch (error) {
       const errorMsg = error.response?.data?.message || "操作失敗";
@@ -133,6 +141,8 @@ function AdminLayout({ setIsAuth }) {
             products={products} 
             setTempProduct={setSelectedProduct} 
             deleteProduct={deleteProduct}
+            pageInfo={pageInfo} // 傳遞分頁資訊
+            handlePageChange={handlePageChange} // 傳遞換頁函式
         />
         
         {loading && (
