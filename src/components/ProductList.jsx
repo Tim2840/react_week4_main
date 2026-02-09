@@ -3,12 +3,22 @@ import PropTypes from "prop-types";
 import Pagination from "./Pagination";
 
 function ProductList({
+  loading,
   products,
   setTempProduct,
   deleteProduct,
   pageInfo,
   handlePageChange,
 }) {
+  if (loading) {
+    return (
+      <div className="text-center py-5">
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="row">
       <div className="col-12">
@@ -92,7 +102,7 @@ function ProductList({
                 <div className="p-3">
                   <Pagination
                     pageInfo={pageInfo}
-                    handlePageChange={handlePageChange}
+                    handlePageChange={() => handlePageChange()}
                   />
                 </div>
               </>
@@ -105,6 +115,7 @@ function ProductList({
 }
 
 ProductList.propTypes = {
+  loading: PropTypes.bool.isRequired,
   products: PropTypes.array.isRequired,
   setTempProduct: PropTypes.func.isRequired,
   deleteProduct: PropTypes.func.isRequired,

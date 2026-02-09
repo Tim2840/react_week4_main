@@ -42,6 +42,7 @@ function AdminLayout({ setIsAuth }) {
   const handlePageChange = (page) => {
     console.log("現在要切換到第幾頁：", page);
     // 提示：呼叫 fetchProducts 並帶入 page 參數
+    fetchProducts(page);
   };
 
   const openAddProductModal = () => {
@@ -144,15 +145,8 @@ function AdminLayout({ setIsAuth }) {
           deleteProduct={deleteProduct}
           pageInfo={pageInfo} // 傳遞分頁資訊
           handlePageChange={handlePageChange} // 傳遞換頁函式
+          loading={loading} // 將 loading 狀態傳遞給 ProductList
         />
-
-        {loading && (
-          <div className="text-center py-5">
-            <div className="spinner-border text-primary" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
-          </div>
-        )}
       </main>
 
       <footer className="bg-white py-3 border-top mt-5">
