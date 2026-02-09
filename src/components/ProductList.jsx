@@ -10,19 +10,20 @@ function ProductList({
   pageInfo,
   handlePageChange,
 }) {
-  if (loading) {
-    return (
-      <div className="text-center py-5">
-        <div className="spinner-border text-primary" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
-    );
-  }
   return (
     <div className="row">
       <div className="col-12">
-        <div className="card border-0 shadow-sm">
+        <div className="card border-0 shadow-sm position-relative">
+          {loading && (
+            <div
+              className="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center bg-white bg-opacity-75"
+              style={{ zIndex: 10 }}
+            >
+              <div className="spinner-border text-primary" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            </div>
+          )}
           <div className="card-body p-0">
             {products.length === 0 ? (
               <div className="text-center py-5 text-muted">
@@ -102,7 +103,7 @@ function ProductList({
                 <div className="p-3">
                   <Pagination
                     pageInfo={pageInfo}
-                    handlePageChange={() => handlePageChange()}
+                    handlePageChange={handlePageChange}
                   />
                 </div>
               </>

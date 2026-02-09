@@ -38,10 +38,9 @@ function AdminLayout({ setIsAuth }) {
     fetchProducts();
   }, []);
 
-  // TODO: 這裡給你練習！請實作換頁邏輯
-  const handlePageChange = (page) => {
+  const handlePageChange = (e, page) => {
     console.log("現在要切換到第幾頁：", page);
-    // 提示：呼叫 fetchProducts 並帶入 page 參數
+    e.preventDefault();
     fetchProducts(page);
   };
 
