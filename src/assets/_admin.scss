@@ -209,3 +209,28 @@
     width: 100%;
   }
 }
+
+/* 分頁元件樣式 (藍色系，無浮起陰影) */
+.pagination {
+  .page-link {
+    color: variables.$backend-main;
+    box-shadow: none !important;
+
+    &:hover {
+      color: variables.$backend-main-hover;
+      background-color: rgba(variables.$backend-main, 0.1);
+      border-color: #dee2e6;
+    }
+  }
+
+  .page-item.active .page-link {
+    background-color: variables.$backend-main;
+    border-color: variables.$backend-main;
+    color: #fff;
+
+    &:hover {
+      background-color: variables.$backend-main-hover;
+      border-color: variables.$backend-main-hover;
+    }
+  }
+}

@@ -17,29 +17,24 @@ function Pagination({ pageInfo, handlePageChange }) {
             </a>
           </li>
 
-          {Array.from({ length: pageInfo.total_pages || 0 }).map(
-            (_, index) => (
-              console.log("原資料索引： ", index),
-              (
-                <li
-                  key={index}
-                  className={`page-item ${
-                    pageInfo.current_page === index + 1 && "active"
-                  }`}
-                >
-                  <a
-                    className="page-link"
-                    href="#"
-                    onClick={(e) => {
-                      handlePageChange(e, index + 1);
-                    }}
-                  >
-                    {index + 1}
-                  </a>
-                </li>
-              )
-            ),
-          )}
+          {Array.from({ length: pageInfo.total_pages || 0 }).map((_, index) => (
+            <li
+              key={index}
+              className={`page-item ${
+                pageInfo.current_page === index + 1 && "active"
+              }`}
+            >
+              <a
+                className="page-link"
+                href="#"
+                onClick={(e) => {
+                  handlePageChange(e, index + 1);
+                }}
+              >
+                {index + 1}
+              </a>
+            </li>
+          ))}
 
           <li className={`page-item ${!pageInfo.has_next && "disabled"}`}>
             <a
