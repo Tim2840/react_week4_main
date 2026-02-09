@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import PropTypes from "prop-types";
 import { Sparkles, Mail, Lock, LogIn } from "lucide-react";
 
 const API_BASE = import.meta.env.VITE_API_BASE;
@@ -24,11 +25,11 @@ function LoginPage({ setIsAuth, getData }) {
 
       document.cookie = `hexToken=${token};expires=${new Date(expired)}`;
       axios.defaults.headers.common["Authorization"] = token;
-      
+
       setIsAuth(true);
-      
+
       // If parent passed getData (fetchProducts), call it. But usually AdminLayout does this on mount.
-      if (getData) getData(); 
+      if (getData) getData();
 
       Swal.fire({
         icon: "success",
@@ -40,7 +41,7 @@ function LoginPage({ setIsAuth, getData }) {
       Swal.fire({
         icon: "error",
         title: "登入失敗",
-        text: `請重新輸入帳號密碼!`,
+        text: `請重新輸入帳號密碼!${error}`,
       });
     }
   };
@@ -93,5 +94,10 @@ function LoginPage({ setIsAuth, getData }) {
     </main>
   );
 }
+
+LoginPage.propTypes = {
+  setIsAuth: PropTypes.func.isRequired,
+  getData: PropTypes.func, // getData is optional here as it's conditionally called
+};
 
 export default LoginPage;

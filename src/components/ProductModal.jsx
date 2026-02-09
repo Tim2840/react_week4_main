@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import PropTypes from "prop-types";
 
 const API_BASE = import.meta.env.VITE_API_BASE;
 const API_PATH = import.meta.env.VITE_API_PATH;
@@ -64,7 +65,7 @@ function ProductModal({ tempProduct, setTempProduct, getData, isOpen }) {
         timer: 1500,
         showConfirmButton: false,
       });
-      
+
       getData(); // Refresh list
       setTempProduct(null); // Close modal
     } catch (error) {
@@ -89,7 +90,7 @@ function ProductModal({ tempProduct, setTempProduct, getData, isOpen }) {
     try {
       const response = await axios.post(
         `${API_BASE}/api/${API_PATH}/admin/upload`,
-        formData
+        formData,
       );
       const { imageUrl } = response.data;
       setTempProduct((prev) => ({
@@ -114,7 +115,11 @@ function ProductModal({ tempProduct, setTempProduct, getData, isOpen }) {
   if (!isOpen) return null;
 
   return (
-    <div className="modal fade show modal-overlay" tabIndex="-1" style={{ display: "block" }}>
+    <div
+      className="modal fade show modal-overlay"
+      tabIndex="-1"
+      style={{ display: "block" }}
+    >
       <div className="modal-dialog modal-xl modal-dialog-centered">
         <div
           className="modal-content"
@@ -195,9 +200,7 @@ function ProductModal({ tempProduct, setTempProduct, getData, isOpen }) {
                   {/* 副圖 */}
                   {tempProduct.imagesUrl.map((url, index) => (
                     <div key={index} className="mb-3">
-                      <label className="form-label">
-                        副圖 {index + 1}
-                      </label>
+                      <label className="form-label">副圖 {index + 1}</label>
                       <input
                         type="text"
                         className="form-control form-control-sm"
@@ -269,10 +272,7 @@ function ProductModal({ tempProduct, setTempProduct, getData, isOpen }) {
                   </div>
                   <div className="row">
                     <div className="col-md-6 mb-3">
-                      <label
-                        htmlFor="origin_price"
-                        className="form-label"
-                      >
+                      <label htmlFor="origin_price" className="form-label">
                         原價
                       </label>
                       <input
@@ -339,10 +339,7 @@ function ProductModal({ tempProduct, setTempProduct, getData, isOpen }) {
                         checked={!!tempProduct.is_enabled}
                         onChange={handleModalInputChange}
                       />
-                      <label
-                        className="form-check-label"
-                        htmlFor="is_enabled"
-                      >
+                      <label className="form-check-label" htmlFor="is_enabled">
                         是否啟用
                       </label>
                     </div>
@@ -352,10 +349,7 @@ function ProductModal({ tempProduct, setTempProduct, getData, isOpen }) {
             </form>
           </div>
           <div className="modal-footer">
-            <button
-              className="btn btn-action"
-              onClick={updateProduct}
-            >
+            <button className="btn btn-action" onClick={updateProduct}>
               {tempProduct.id ? "儲存變更" : "新增商品"}
             </button>
             <button
@@ -371,5 +365,12 @@ function ProductModal({ tempProduct, setTempProduct, getData, isOpen }) {
     </div>
   );
 }
+
+ProductModal.propTypes = {
+  tempProduct: PropTypes.object.isRequired,
+  setTempProduct: PropTypes.func.isRequired,
+  getData: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+};
 
 export default ProductModal;

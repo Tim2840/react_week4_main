@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import PropTypes from "prop-types";
 import { Sparkles, LogOut, Plus } from "lucide-react";
 import ProductList from "./ProductList";
 import ProductModal from "./ProductModal";
@@ -18,7 +19,7 @@ function AdminLayout({ setIsAuth }) {
     try {
       setLoading(true);
       const response = await axios.get(
-        `${API_BASE}/api/${API_PATH}/admin/products?page=${page}`
+        `${API_BASE}/api/${API_PATH}/admin/products?page=${page}`,
       );
       setProducts(response.data.products);
       setPageInfo(response.data.pagination); // 儲存分頁資訊
@@ -26,7 +27,7 @@ function AdminLayout({ setIsAuth }) {
       Swal.fire({
         icon: "error",
         title: "取得商品失敗",
-        text: "請重新整理頁面",
+        text: `請重新整理頁面!${error}`,
       });
     } finally {
       setLoading(false);
@@ -75,7 +76,7 @@ function AdminLayout({ setIsAuth }) {
 
       if (result.isConfirmed) {
         await axios.delete(
-          `${API_BASE}/api/${API_PATH}/admin/product/${targetId}`
+          `${API_BASE}/api/${API_PATH}/admin/product/${targetId}`,
         );
         fetchProducts(); // 刪除後重新取得當前頁面資料
       }
@@ -137,22 +138,21 @@ function AdminLayout({ setIsAuth }) {
         </div>
 
         {/* 商品列表 */}
-        <ProductList 
-            products={products} 
-            setTempProduct={setSelectedProduct} 
-            deleteProduct={deleteProduct}
-            pageInfo={pageInfo} // 傳遞分頁資訊
-            handlePageChange={handlePageChange} // 傳遞換頁函式
+        <ProductList
+          products={products}
+          setTempProduct={setSelectedProduct}
+          deleteProduct={deleteProduct}
+          pageInfo={pageInfo} // 傳遞分頁資訊
+          handlePageChange={handlePageChange} // 傳遞換頁函式
         />
-        
-        {loading && (
-             <div className="text-center py-5">
-             <div className="spinner-border text-primary" role="status">
-               <span className="visually-hidden">Loading...</span>
-             </div>
-           </div>
-        )}
 
+        {loading && (
+          <div className="text-center py-5">
+            <div className="spinner-border text-primary" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        )}
       </main>
 
       <footer className="bg-white py-3 border-top mt-5">
@@ -173,5 +173,9 @@ function AdminLayout({ setIsAuth }) {
     </div>
   );
 }
+
+AdminLayout.propTypes = {
+  setIsAuth: PropTypes.func.isRequired,
+};
 
 export default AdminLayout;

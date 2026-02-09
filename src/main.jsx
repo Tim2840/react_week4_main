@@ -4,11 +4,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./assets/all.scss";
 import App from "./App.jsx";
-import MyApp from "./MyApp.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <App />
-    {/* <MyApp /> */}
   </StrictMode>,
 );

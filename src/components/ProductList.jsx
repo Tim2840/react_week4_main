@@ -1,7 +1,14 @@
 import { NotebookPen, Trash } from "lucide-react";
+import PropTypes from "prop-types";
 import Pagination from "./Pagination";
 
-function ProductList({ products, setTempProduct, deleteProduct, pageInfo, handlePageChange }) {
+function ProductList({
+  products,
+  setTempProduct,
+  deleteProduct,
+  pageInfo,
+  handlePageChange,
+}) {
   return (
     <div className="row">
       <div className="col-12">
@@ -42,15 +49,11 @@ function ProductList({ products, setTempProduct, deleteProduct, pageInfo, handle
                             <td className="fw-500">{category}</td>
                             <td className="fw-500">{title}</td>
                             <td>NT$ {origin_price}</td>
-                            <td className="text-danger fw-bold">
-                              NT$ {price}
-                            </td>
+                            <td className="text-danger fw-bold">NT$ {price}</td>
                             <td>
                               <span
                                 className={`badge ${
-                                  is_enabled
-                                    ? "bg-success"
-                                    : "bg-secondary"
+                                  is_enabled ? "bg-success" : "bg-secondary"
                                 }`}
                               >
                                 {product.is_enabled ? "啟用" : "停用"}
@@ -84,10 +87,13 @@ function ProductList({ products, setTempProduct, deleteProduct, pageInfo, handle
                     </tbody>
                   </table>
                 </div>
-                
+
                 {/* Pagination 區塊 */}
                 <div className="p-3">
-                   <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange} />
+                  <Pagination
+                    pageInfo={pageInfo}
+                    handlePageChange={handlePageChange}
+                  />
                 </div>
               </>
             )}
@@ -97,5 +103,13 @@ function ProductList({ products, setTempProduct, deleteProduct, pageInfo, handle
     </div>
   );
 }
+
+ProductList.propTypes = {
+  products: PropTypes.array.isRequired,
+  setTempProduct: PropTypes.func.isRequired,
+  deleteProduct: PropTypes.func.isRequired,
+  pageInfo: PropTypes.object.isRequired,
+  handlePageChange: PropTypes.func.isRequired,
+};
 
 export default ProductList;
