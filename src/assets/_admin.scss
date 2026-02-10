@@ -1,10 +1,6 @@
 @use "./variables";
 
 /* 後台管理樣式 */
-* {
-  transition: all 0.3s ease !important;
-}
-
 .admin-layout {
   background-color: #f5f5f5;
 
@@ -210,16 +206,31 @@
   }
 }
 
-/* 分頁元件樣式 (藍色系，無浮起陰影) */
+/* 分頁元件樣式 (分離式圓角設計，契合後台風格) */
 .pagination {
+  gap: 4px; // 按鈕之間的間距
+
+  .page-item {
+    // 覆蓋 Bootstrap 預設的相連樣式，讓每個按鈕都有圓角
+    &:first-child .page-link,
+    &:last-child .page-link {
+      border-radius: 6px;
+    }
+  }
+
   .page-link {
+    border-radius: 6px; // 統一圓角
+    border: 1px solid #dee2e6;
     color: variables.$backend-main;
+    min-width: 32px; // 讓數字按鈕寬度一致，視覺更整齊
+    text-align: center;
     box-shadow: none !important;
+    transition: all 0.2s ease;
 
     &:hover {
-      color: variables.$backend-main-hover;
       background-color: rgba(variables.$backend-main, 0.1);
-      border-color: #dee2e6;
+      color: variables.$backend-main-hover;
+      border-color: variables.$backend-main;
     }
   }
 
@@ -232,5 +243,11 @@
       background-color: variables.$backend-main-hover;
       border-color: variables.$backend-main-hover;
     }
+  }
+
+  .page-item.disabled .page-link {
+    background-color: #f8f9fa;
+    color: #adb5bd;
+    border-color: #dee2e6;
   }
 }

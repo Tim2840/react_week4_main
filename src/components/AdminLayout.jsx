@@ -11,7 +11,7 @@ const API_PATH = import.meta.env.VITE_API_PATH;
 
 function AdminLayout({ setIsAuth }) {
   const [products, setProducts] = useState([]);
-  const [pageInfo, setPageInfo] = useState({}); // 新增：分頁資訊狀態
+  const [pageInfo, setPageInfo] = useState({});
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -22,7 +22,7 @@ function AdminLayout({ setIsAuth }) {
         `${API_BASE}/api/${API_PATH}/admin/products?page=${page}`,
       );
       setProducts(response.data.products);
-      setPageInfo(response.data.pagination); // 儲存分頁資訊
+      setPageInfo(response.data.pagination);
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -158,7 +158,7 @@ function AdminLayout({ setIsAuth }) {
 
       {/* Modal */}
       <ProductModal
-        isOpen={!!selectedProduct}
+        isOpen={selectedProduct}
         tempProduct={selectedProduct}
         setTempProduct={setSelectedProduct}
         getData={fetchProducts}

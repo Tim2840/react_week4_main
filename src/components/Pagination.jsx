@@ -4,7 +4,7 @@ function Pagination({ pageInfo, handlePageChange }) {
   return (
     <div className="d-flex justify-content-center">
       <nav>
-        <ul className="pagination">
+        <ul className="pagination pagination-sm m-0">
           <li className={`page-item ${!pageInfo.has_pre && "disabled"}`}>
             <a
               className="page-link"
@@ -13,7 +13,7 @@ function Pagination({ pageInfo, handlePageChange }) {
                 handlePageChange(e, pageInfo.current_page - 1);
               }}
             >
-              上一頁
+              &lt;
             </a>
           </li>
 
@@ -44,7 +44,7 @@ function Pagination({ pageInfo, handlePageChange }) {
                 handlePageChange(e, pageInfo.current_page + 1);
               }}
             >
-              下一頁
+              &gt;
             </a>
           </li>
         </ul>

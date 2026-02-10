@@ -60,7 +60,7 @@ function ProductList({
                             <td className="fw-500">{category}</td>
                             <td className="fw-500">{title}</td>
                             <td>NT$ {origin_price}</td>
-                            <td className="text-danger fw-bold">NT$ {price}</td>
+                            <td className="fw-bold">NT$ {price}</td>
                             <td>
                               <span
                                 className={`badge ${
